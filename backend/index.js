@@ -7,6 +7,11 @@ const PORT = process.env.PORT || 3000;
 // Middleware to parse JSON
 app.use(express.json());
 
+// Add a route for the root URL
+app.get('/', (req, res) => {
+    res.send('Welcome to the Roblox API Server!');
+});
+
 // Endpoint to fetch Roblox user avatar
 app.get('/avatar/:userId', async (req, res) => {
     const { userId } = req.params;
