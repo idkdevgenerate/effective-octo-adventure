@@ -139,6 +139,60 @@ app.post('/real-oauth', (req, res) => {
     }
 });
 
+// Simulate Roblox OAuth authorization flow
+app.get('/roblox-oauth/authorize', (req, res) => {
+    const { clientId, redirectUri, scope, state } = req.query;
+
+    if (!clientId || !redirectUri) {
+        return res.status(400).json({ error: 'Missing required parameters: clientId or redirectUri' });
+    }
+
+    // Simulate redirecting to Roblox's OAuth authorization page
+    const authorizationUrl = `https://roblox.com/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope || 'read'}&state=${state || ''}&response_type=code`;
+
+    res.json({
+        message: 'Redirecting to Roblox OAuth authorization page',
+        logo: 'https://via.placeholder.com/150?text=Roblox+OAuth+Logo',
+        name: 'Roblox OAuth Authorization',
+        description: 'Authorize your application to access Roblox resources on behalf of the user.',
+        authorizationUrl
+    });
+});
+
+// Simulate Roblox OAuth token exchange
+app.post('/roblox-oauth/token', (req, res) => {
+    const { clientId, clientSecret, code, redirectUri } = req.body;
+
+    if (!clientId || !clientSecret || !code || !redirectUri) {
+        return res.status(400).json({ error: 'Missing required parameters' });
+    }
+
+    // Simulate token generation
+    res.json({
+        access_token: 'fake-roblox-access-token',
+        token_type: 'Bearer',
+        expires_in: 3600,
+        refresh_token: 'fake-roblox-refresh-token'
+    });
+});
+
+// Simulate fetching Roblox user info
+app.get('/roblox-oauth/userinfo', (req, res) => {
+    const { accessToken } = req.query;
+
+    if (!accessToken) {
+        return res.status(400).json({ error: 'Missing access token' });
+    }
+
+    // Simulate fetching user info
+    res.json({
+        id: '123456',
+        username: 'RobloxUser',
+        displayName: 'Roblox User',
+        avatarUrl: 'https://via.placeholder.com/150?text=Roblox+Avatar'
+    });
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
