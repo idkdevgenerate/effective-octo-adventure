@@ -1,0 +1,10 @@
+// Added a Netlify-specific configuration file for deployment
+{
+  "build": {
+    "publish": "backend",
+    "command": "npm install && node index.js"
+  },
+  "functions": {
+    "directory": "backend"
+  }
+}
